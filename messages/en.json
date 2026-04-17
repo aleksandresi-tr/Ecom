@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "Georgian Real Estate Aggregator CRM",
+    "subtitle": "Myhome/SS.ge listing monitor",
+    "languageSwitch": "ქართული"
+  },
+  "listings": {
+    "searchPlaceholder": "Search by Myhome ID, SS.ge ID, phone or address",
+    "allTopics": "All topics",
+    "topicKa": "Topic name (KA)",
+    "topicEn": "Topic name (EN)",
+    "addTopic": "Add topic",
+    "topic": "Topic",
+    "gldani": "Gldani",
+    "saburtalo": "Saburtalo",
+    "nakhalovaka": "Nakhalovaka",
+    "priceFactor": "Price factor",
+    "noResults": "No matching listings were found.",
+    "myhomeId": "Myhome ID",
+    "ssgeId": "SS.ge ID",
+    "phone": "Phone",
+    "addListing": "Add listing"
+  },
+  "detail": {
+    "title": "Listing details",
+    "close": "Close",
+    "source": "Source",
+    "status": "Status",
+    "cooperation": "Cooperation",
+    "phone": "Phone",
+    "tenant": "Tenant",
+    "rooms": "Rooms",
+    "floor": "Floor",
+    "apartment": "Apartment",
+    "price": "Price (GEL)",
+    "address": "Address",
+    "date": "Listing date",
+    "sourceLink": "Source link",
+    "topic": "Topic",
+    "save": "Save",
+    "delete": "Delete"
+  }
+}

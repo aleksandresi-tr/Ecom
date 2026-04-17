@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ListingSource {
+  MYHOME
+  SS_GE
+}
+
+enum District {
+  GLDANI
+  SABURTALO
+  NAKHALOVAKA
+  OTHER
+}
+
+enum ListingStatus {
+  FOR_RENT
+  RENTED
+  LISTED
+}
+
+model Topic {
+  id        Int       @id @default(autoincrement())
+  nameKa    String
+  nameEn    String
+  listings  Listing[]
+  createdAt DateTime  @default(now())
+}
+
+model Listing {
+  id          Int           @id @default(autoincrement())
+  myhomeId    String?
+  ssGeId      String?
+  source      ListingSource
+  district    District
+  status      ListingStatus
+  cooperation Int
+  phone       String?
+  tenantName  String?
+  rooms       Int?
+  floor       Int?
+  apartment   Int?
+  priceGEL    Float?
+  priceFactor Float?
+  address     String?
+  topicId     Int?
+  topic       Topic?        @relation(fields: [topicId], references: [id])
+  listingDate DateTime      @default(now())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([district])
+  @@index([topicId])
+  @@index([listingDate])
+}

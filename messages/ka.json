@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "უძრავი ქონების აგრეგატორი CRM",
+    "subtitle": "Myhome/SS.ge განცხადებების მონიტორინგი",
+    "languageSwitch": "English"
+  },
+  "listings": {
+    "searchPlaceholder": "ძიება Myhome ID, SS.ge ID, ტელეფონი ან მისამართი",
+    "allTopics": "ყველა თემა",
+    "topicKa": "თემის სახელი (KA)",
+    "topicEn": "თემის სახელი (EN)",
+    "addTopic": "თემის დამატება",
+    "topic": "თემა",
+    "gldani": "გლდანი",
+    "saburtalo": "საბურთალო",
+    "nakhalovaka": "ნახალოვაკა",
+    "priceFactor": "ფასი / ფაქტორი",
+    "noResults": "ჩანაწერი ვერ მოიძებნა.",
+    "myhomeId": "Myhome ID",
+    "ssgeId": "SS.ge ID",
+    "phone": "ტელეფონი",
+    "addListing": "განცხადების დამატება"
+  },
+  "detail": {
+    "title": "განცხადების დეტალი",
+    "close": "დახურვა",
+    "source": "წყარო",
+    "status": "სტატუსი",
+    "cooperation": "თანამშრომლობა",
+    "phone": "ტელეფონი",
+    "tenant": "მოიჯარე",
+    "rooms": "ოთახები",
+    "floor": "სართული",
+    "apartment": "ბინა",
+    "price": "ფასი (GEL)",
+    "address": "მისამართი",
+    "date": "თარიღი",
+    "sourceLink": "ბმული",
+    "topic": "თემა",
+    "save": "შენახვა",
+    "delete": "წაშლა"
+  }
+}
