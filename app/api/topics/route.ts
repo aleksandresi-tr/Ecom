@@ -1,8 +1,18 @@
+import { requireAdminUser, requireSignedInUser } from "@/lib/auth-guards";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  const authResult = await requireSignedInUser();
+  if (authResult.error) {
+    return authResult.error;
+  }
+  const user = authResult.user;
+
   const topics = await prisma.topic.findMany({
+    where: {
+      companyId: user.companyId,
+    },
     orderBy: { createdAt: "desc" },
   });
 
@@ -10,6 +20,12 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const authResult = await requireAdminUser();
+  if (authResult.error) {
+    return authResult.error;
+  }
+  const user = authResult.user;
+
   const body = (await request.json()) as {
     nameKa?: string;
     nameEn?: string;
@@ -26,6 +42,7 @@ export async function POST(request: Request) {
     data: {
       nameKa: body.nameKa,
       nameEn: body.nameEn,
+      companyId: user.companyId,
     },
   });
 

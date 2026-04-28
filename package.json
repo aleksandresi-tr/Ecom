@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "db:generate": "prisma generate",
@@ -15,10 +15,12 @@
   "dependencies": {
     "@base-ui/react": "^1.4.0",
     "@prisma/client": "^6.19.3",
+    "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.8.0",
     "next": "16.2.4",
+    "next-auth": "^5.0.0-beta.30",
     "next-intl": "^4.9.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -38,7 +40,8 @@
     "prisma": "^6.19.3",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vercel": "^51.6.1"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

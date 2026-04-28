@@ -23,39 +23,120 @@ enum ListingStatus {
   FOR_RENT
   RENTED
   LISTED
+  MEETING_SCHEDULED
+}
+
+enum ListingCategory {
+  RENT
+  SALE
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  USER
 }
 
 model Topic {
   id        Int       @id @default(autoincrement())
   nameKa    String
   nameEn    String
+  companyId Int
+  company   Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
   listings  Listing[]
   createdAt DateTime  @default(now())
+
+  @@index([companyId])
 }
 
 model Listing {
-  id          Int           @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   myhomeId    String?
   ssGeId      String?
   source      ListingSource
   district    District
   status      ListingStatus
+  category    ListingCategory @default(RENT)
   cooperation Int
   phone       String?
   tenantName  String?
   rooms       Int?
   floor       Int?
   apartment   Int?
+  areaSqm     Float?
   priceGEL    Float?
   priceFactor Float?
   address     String?
+  comment     String?
+  companyId   Int
+  company     Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
   topicId     Int?
-  topic       Topic?        @relation(fields: [topicId], references: [id])
-  listingDate DateTime      @default(now())
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  topic       Topic?          @relation(fields: [topicId], references: [id])
+  createdById Int?
+  createdBy   User?           @relation("ListingCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  listingDate DateTime        @default(now())
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 
   @@index([district])
+  @@index([companyId])
   @@index([topicId])
   @@index([listingDate])
+  @@index([createdById])
+  @@index([category])
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  passwordHash String
+  name         String?
+  role         Role      @default(USER)
+  isActive     Boolean   @default(true)
+  companyId    Int
+  company      Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  listings     Listing[] @relation("ListingCreatedBy")
+  teams        TeamMember[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([companyId])
+  @@index([role])
+  @@index([isActive])
+}
+
+model Team {
+  id        Int          @id @default(autoincrement())
+  name      String
+  companyId Int
+  company   Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  members   TeamMember[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([companyId])
+}
+
+model TeamMember {
+  id     Int  @id @default(autoincrement())
+  teamId Int
+  team   Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, userId])
+  @@index([teamId])
+  @@index([userId])
+}
+
+model Company {
+  id        Int       @id @default(autoincrement())
+  name      String
+  slug      String    @unique
+  users     User[]
+  topics    Topic[]
+  listings  Listing[]
+  teams     Team[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
