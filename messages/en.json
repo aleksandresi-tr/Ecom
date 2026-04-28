@@ -97,7 +97,11 @@
     "categoryRent": "Rent",
     "categorySale": "Sale",
     "categoryBuy": "Buy",
-    "categoryRentSale": "Rent / Sale",
+    "categoryCommercial": "Commercial",
+    "categoryRentSale": "Rent / Sale / Commercial",
+    "copyId": "Copy ID",
+    "copyLink": "Copy link",
+    "idCopied": "ID copied",
     "rooms": "Rooms",
     "bedrooms": "Bedrooms",
     "floor": "Floor",
@@ -160,7 +164,12 @@
     "reference": "Reference",
     "topic": "Topic",
     "status": "Status",
-    "updatedAt": "Updated"
+    "updatedAt": "Updated",
+    "meetingsTitle": "Meetings scheduled",
+    "meetingsHint": "All listings where an agent has scheduled a meeting.",
+    "address": "Address",
+    "agent": "Agent",
+    "noMeetings": "No meetings scheduled."
   },
   "teams": {
     "title": "Teams",

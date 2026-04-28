@@ -24,6 +24,8 @@ export type ListingCardLabels = {
   copied: string;
   linkCopy: string;
   linkCopied: string;
+  copyId: string;
+  idCopied: string;
   open: string;
   openMenu: string;
   actionMeeting: string;
@@ -37,6 +39,7 @@ export type ListingCardLabels = {
   statusMeeting: string;
   categoryRent: string;
   categorySale: string;
+  categoryCommercial: string;
 };
 
 type ListingCardProps = {
@@ -66,6 +69,18 @@ function statusToLabel(status: ListingDto["status"], labels: ListingCardLabels) 
     case "LISTED":
     default:
       return labels.statusListed;
+  }
+}
+
+function categoryToLabel(category: ListingDto["category"], labels: ListingCardLabels) {
+  switch (category) {
+    case "SALE":
+      return labels.categorySale;
+    case "COMMERCIAL":
+      return labels.categoryCommercial;
+    case "RENT":
+    default:
+      return labels.categoryRent;
   }
 }
 
@@ -105,9 +120,7 @@ function buildForwardCopy(listing: ListingDto, labels: ListingCardLabels, locale
   if (listing.priceGEL !== null) lines.push(`GEL: ${listing.priceGEL}`);
   if (listing.phone) lines.push(`${labels.phone}: ${listing.phone}`);
   lines.push(`${labels.cooperation}: ${listing.cooperation}%`);
-  lines.push(
-    `${listing.category === "SALE" ? labels.categorySale : labels.categoryRent} / ${statusToLabel(listing.status, labels)}`,
-  );
+  lines.push(`${categoryToLabel(listing.category, labels)} / ${statusToLabel(listing.status, labels)}`);
   if (listing.createdBy?.name || listing.createdBy?.email) {
     lines.push(`${labels.agent}: ${listing.createdBy.name ?? listing.createdBy.email}`);
   }
@@ -143,14 +156,14 @@ export function ListingCard({
 
   return (
     <article
-      className={`relative flex h-full flex-col gap-2 rounded-xl border-2 bg-card p-3 shadow-sm transition ${borderClass}`}
+      className={`relative flex h-full flex-col gap-3 rounded-2xl border-2 bg-card p-4 shadow-sm transition ${borderClass}`}
     >
       <header className="flex items-start justify-between gap-2">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-            {listing.category === "SALE" ? labels.categorySale : labels.categoryRent}
+            {categoryToLabel(listing.category, labels)}
           </p>
-          <p className="text-[13px] font-semibold text-foreground">
+          <p className="text-sm font-semibold text-foreground">
             {statusToLabel(listing.status, labels)}
           </p>
         </div>
@@ -187,32 +200,38 @@ export function ListingCard({
         />
       </header>
 
-      <div className="grid gap-1.5">
+      <div className="grid gap-2">
         {listing.myhomeId ? (
           <AutoCopyField
             label={labels.myhomeId}
             value={listing.myhomeId}
-            copyText={myhomeLink}
-            copiedLabel={labels.linkCopied}
+            linkText={myhomeLink}
+            copyIdLabel={labels.copyId}
+            copyLinkLabel={labels.linkCopy}
+            idCopiedLabel={labels.idCopied}
+            linkCopiedLabel={labels.linkCopied}
           />
         ) : null}
         {listing.ssGeId ? (
           <AutoCopyField
             label={labels.ssgeId}
             value={listing.ssGeId}
-            copyText={ssgeLink}
-            copiedLabel={labels.linkCopied}
+            linkText={ssgeLink}
+            copyIdLabel={labels.copyId}
+            copyLinkLabel={labels.linkCopy}
+            idCopiedLabel={labels.idCopied}
+            linkCopiedLabel={labels.linkCopied}
           />
         ) : null}
       </div>
 
       {listing.address ? (
-        <p className="text-[13px] font-semibold leading-snug text-foreground">
+        <p className="text-base font-semibold leading-snug text-foreground">
           {listing.address}
         </p>
       ) : null}
 
-      <dl className="grid grid-cols-3 gap-1 text-[11px]">
+      <dl className="grid grid-cols-3 gap-2 text-xs">
         <Field term={labels.bedrooms} description={listing.rooms} />
         <Field term={labels.floor} description={listing.floor} />
         <Field term={labels.apartment} description={listing.apartment} />
@@ -228,12 +247,12 @@ export function ListingCard({
       </dl>
 
       {listing.comment ? (
-        <p className="rounded-md border border-dashed border-border bg-muted/40 px-2 py-1 text-[11px] text-muted-foreground">
+        <p className="rounded-lg border border-dashed border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
           {listing.comment}
         </p>
       ) : null}
 
-      <footer className="mt-auto flex items-center justify-between border-t border-border/60 pt-1.5 text-[10px] text-muted-foreground">
+      <footer className="mt-auto flex items-center justify-between border-t border-border/60 pt-2 text-[11px] text-muted-foreground">
         <span>
           {labels.agent}:{" "}
           <span className="font-medium text-foreground">
@@ -248,9 +267,9 @@ export function ListingCard({
 
 function Field({ term, description }: { term: string; description: string | number | null }) {
   return (
-    <div className="rounded-md border border-border bg-background/60 px-1.5 py-0.5">
-      <dt className="text-[9px] uppercase tracking-wide text-muted-foreground">{term}</dt>
-      <dd className="text-[11px] font-semibold text-foreground">
+    <div className="rounded-lg border border-border bg-background/60 px-2 py-1">
+      <dt className="text-[10px] uppercase tracking-wide text-muted-foreground">{term}</dt>
+      <dd className="text-xs font-semibold text-foreground">
         {description === null || description === "" ? "-" : description}
       </dd>
     </div>

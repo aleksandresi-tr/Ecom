@@ -174,8 +174,8 @@ export function ListingsWorkspace({
   }
 
   return (
-    <div className="space-y-3 pb-8">
-      <section className="grid gap-2 sm:grid-cols-2">
+    <div className="space-y-5 pb-8">
+      <section className="grid gap-3 sm:grid-cols-2">
         <StatCard
           title={tListings("totalListingsTitle")}
           value={String(listings.length)}
@@ -198,7 +198,7 @@ export function ListingsWorkspace({
       />
 
       {isAdmin ? (
-        <div className="flex flex-wrap items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() =>
@@ -206,7 +206,7 @@ export function ListingsWorkspace({
                 statusFilter === "MEETING_SCHEDULED" ? "ALL" : "MEETING_SCHEDULED",
               )
             }
-            className={`inline-flex items-center gap-1.5 rounded-full border-2 px-2.5 py-0.5 text-[11px] font-semibold transition ${
+            className={`inline-flex items-center gap-2 rounded-full border-2 px-3 py-1 text-xs font-semibold transition ${
               statusFilter === "MEETING_SCHEDULED"
                 ? "border-orange-500 bg-orange-500 text-white"
                 : "border-orange-500 bg-orange-50 text-orange-700 hover:bg-orange-100"
@@ -227,7 +227,7 @@ export function ListingsWorkspace({
         </div>
       ) : null}
 
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-2">
         <FilterChip
           active={categoryFilter === "ALL"}
           onClick={() => setCategoryFilter("ALL")}
@@ -242,6 +242,11 @@ export function ListingsWorkspace({
           active={categoryFilter === "SALE"}
           onClick={() => setCategoryFilter("SALE")}
           label={tListings("categorySale")}
+        />
+        <FilterChip
+          active={categoryFilter === "COMMERCIAL"}
+          onClick={() => setCategoryFilter("COMMERCIAL")}
+          label={tListings("categoryCommercial")}
         />
         <span className="mx-1 self-center text-xs text-muted-foreground">|</span>
         <FilterChip
@@ -272,8 +277,8 @@ export function ListingsWorkspace({
       </div>
 
       {users.length > 0 ? (
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
             {tListings("userFilterTitle")}
           </span>
           <FilterChip
@@ -319,20 +324,16 @@ export function ListingsWorkspace({
           sectionLabel: tListings("sectionOneLabel"),
           panelTitle: tListings("databaseEntryPanelTitle"),
           quickAddHint: tListings("quickAddHint"),
-          sourceField: tListings("sourceField"),
-          sourceMyhome: tListings("sourceMyhome"),
-          sourceSsge: tListings("sourceSsge"),
           statusForRent: tListings("statusForRent"),
           statusListed: tListings("statusListed"),
-          statusMeeting: tListings("statusMeeting"),
-          statusRented: tListings("statusRented"),
+          statusField: tDetail("status"),
           categoryRent: tListings("categoryRent"),
           categorySale: tListings("categorySale"),
+          categoryCommercial: tListings("categoryCommercial"),
           categoryRentSale: tListings("categoryRentSale"),
           cooperation: tListings("cooperation"),
           topic: tListings("topic"),
           allTopics: tListings("allTopics"),
-          sourceIdField: tListings("sourceIdField"),
           myhomeId: tListings("myhomeId"),
           ssgeId: tListings("ssgeId"),
           phone: tListings("phone"),
@@ -406,6 +407,8 @@ export function ListingsWorkspace({
             copied: tListings("copied"),
             linkCopy: tListings("linkCopy"),
             linkCopied: tListings("linkCopied"),
+            copyId: tListings("copyId"),
+            idCopied: tListings("idCopied"),
             open: tListings("open"),
             openMenu: tListings("openMenu"),
             actionMeeting: tListings("actionMeeting"),
@@ -419,6 +422,7 @@ export function ListingsWorkspace({
             statusMeeting: tListings("statusMeeting"),
             categoryRent: tListings("categoryRent"),
             categorySale: tListings("categorySale"),
+            categoryCommercial: tListings("categoryCommercial"),
           }}
         />
       </section>
@@ -475,6 +479,7 @@ export function ListingsWorkspace({
           statusMeeting: tListings("statusMeeting"),
           categoryRent: tListings("categoryRent"),
           categorySale: tListings("categorySale"),
+          categoryCommercial: tListings("categoryCommercial"),
         }}
       />
 
@@ -507,17 +512,17 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <article className="rounded-lg border border-border/80 bg-card/95 p-2 shadow-[0_4px_14px_rgba(0,0,0,0.04)] backdrop-blur">
-      <div className="mb-1 inline-flex rounded-md bg-muted px-1.5 py-0.5 text-muted-foreground">
+    <article className="rounded-xl border border-border/80 bg-card/95 p-3 shadow-[0_4px_14px_rgba(0,0,0,0.04)] backdrop-blur">
+      <div className="mb-2 inline-flex rounded-md bg-muted px-2 py-1 text-muted-foreground">
         {icon}
       </div>
       <p className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
         {title}
       </p>
-      <p className="mt-0.5 text-base font-semibold tracking-tight text-foreground">
+      <p className="mt-0.5 text-lg font-semibold tracking-tight text-foreground">
         {value}
       </p>
-      <p className="text-[10px] text-muted-foreground">{hint}</p>
+      <p className="text-[11px] text-muted-foreground">{hint}</p>
     </article>
   );
 }
@@ -535,7 +540,7 @@ function FilterChip({
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-full border px-2.5 py-0.5 text-[11px] transition ${
+      className={`rounded-full border px-3 py-1 text-xs transition ${
         active
           ? "border-primary bg-primary/10 text-primary"
           : "border-border bg-background text-muted-foreground hover:border-primary"

@@ -71,6 +71,7 @@ type ListingDetailPanelProps = {
     statusMeeting: string;
     categoryRent: string;
     categorySale: string;
+    categoryCommercial: string;
   };
 };
 
@@ -186,7 +187,12 @@ export function ListingDetailPanel({
       ? labels.statusListed
       : "-";
 
-  const categoryLabel = category === "SALE" ? labels.categorySale : labels.categoryRent;
+  const categoryLabel =
+    category === "SALE"
+      ? labels.categorySale
+      : category === "COMMERCIAL"
+        ? labels.categoryCommercial
+        : labels.categoryRent;
 
   const inputClass =
     "h-10 rounded-lg border border-border bg-background px-3 text-sm outline-none transition focus:border-primary";
@@ -341,6 +347,7 @@ export function ListingDetailPanel({
                     >
                       <option value="RENT">{labels.categoryRent}</option>
                       <option value="SALE">{labels.categorySale}</option>
+                      <option value="COMMERCIAL">{labels.categoryCommercial}</option>
                     </select>
                   </label>
                   <label className="grid gap-1 sm:col-span-1">

@@ -97,7 +97,11 @@
     "categoryRent": "ქირა",
     "categorySale": "გაყიდვა",
     "categoryBuy": "ყიდვა",
-    "categoryRentSale": "ქირავდება / იყიდება",
+    "categoryCommercial": "კომერციული ფართი",
+    "categoryRentSale": "ქირავდება / იყიდება / კომერც.",
+    "copyId": "ID-ის კოპირება",
+    "copyLink": "ლინკის კოპირება",
+    "idCopied": "ID დაკოპირდა",
     "rooms": "ოთახი",
     "bedrooms": "საძინებელი",
     "floor": "სართული",
@@ -160,7 +164,12 @@
     "reference": "რეფერენსი",
     "topic": "თემა",
     "status": "სტატუსი",
-    "updatedAt": "განახლდა"
+    "updatedAt": "განახლდა",
+    "meetingsTitle": "შეხვედრა დაგეგმილია",
+    "meetingsHint": "ყველა განცხადება, რომელზეც აგენტმა შეხვედრა მიანიჭა.",
+    "address": "მისამართი",
+    "agent": "აგენტი",
+    "noMeetings": "შეხვედრა არ არის დაგეგმილი."
   },
   "teams": {
     "title": "გუნდები",

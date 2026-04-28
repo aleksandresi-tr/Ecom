@@ -17,7 +17,7 @@ export type ListingDto = {
   source: "MYHOME" | "SS_GE";
   district: "GLDANI" | "SABURTALO" | "NAKHALOVAKA" | "OTHER";
   status: "FOR_RENT" | "RENTED" | "LISTED" | "MEETING_SCHEDULED";
-  category: "RENT" | "SALE";
+  category: "RENT" | "SALE" | "COMMERCIAL";
   cooperation: number;
   phone: string | null;
   tenantName: string | null;

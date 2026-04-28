@@ -37,9 +37,9 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <div className="min-h-screen bg-grid-soft bg-gradient-to-b from-muted/30 via-background to-background">
-        <div className="pointer-events-none fixed inset-x-0 top-0 -z-10 mx-auto h-64 max-w-7xl bg-[radial-gradient(circle_at_20%_20%,color-mix(in_oklab,var(--primary)_14%,transparent),transparent_45%),radial-gradient(circle_at_80%_10%,color-mix(in_oklab,var(--chart-1)_20%,transparent),transparent_40%)]" />
+        <div className="pointer-events-none fixed inset-x-0 top-0 -z-10 mx-auto h-64 max-w-[1600px] bg-[radial-gradient(circle_at_20%_20%,color-mix(in_oklab,var(--primary)_14%,transparent),transparent_45%),radial-gradient(circle_at_80%_10%,color-mix(in_oklab,var(--chart-1)_20%,transparent),transparent_40%)]" />
         <header className="sticky top-0 z-20 border-b border-border/80 bg-background/88 shadow-[0_6px_24px_rgba(0,0,0,0.05)] backdrop-blur-xl">
-          <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4">
+          <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-4 px-4 py-4">
             <div>
               <h1 className="text-lg font-semibold tracking-tight">{t("title")}</h1>
               <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
@@ -90,7 +90,7 @@ export default async function LocaleLayout({
             </div>
           </div>
         </header>
-        <main className="mx-auto w-full max-w-7xl px-4 py-6">{children}</main>
+        <main className="mx-auto w-full max-w-[1600px] px-4 py-6">{children}</main>
       </div>
     </NextIntlClientProvider>
   );

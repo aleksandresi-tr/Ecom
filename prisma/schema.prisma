@@ -29,6 +29,7 @@ enum ListingStatus {
 enum ListingCategory {
   RENT
   SALE
+  COMMERCIAL
 }
 
 enum Role {

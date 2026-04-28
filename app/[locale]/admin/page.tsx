@@ -27,7 +27,7 @@ export default async function AdminPage({ params }: AdminPageProps) {
   const companyId = session.user.companyId;
 
   const t = await getTranslations("admin");
-  const [users, recentListings, counts, companies] = await Promise.all([
+  const [users, recentListings, meetingListings, counts, companies] = await Promise.all([
     prisma.user.findMany({
       where: {
         companyId,
@@ -49,6 +49,18 @@ export default async function AdminPage({ params }: AdminPageProps) {
       orderBy: [{ updatedAt: "desc" }],
       include: { topic: true },
       take: 10,
+    }),
+    prisma.listing.findMany({
+      where: {
+        companyId,
+        status: "MEETING_SCHEDULED",
+      },
+      orderBy: [{ updatedAt: "desc" }],
+      include: {
+        createdBy: {
+          select: { id: true, name: true, email: true },
+        },
+      },
     }),
     prisma.$transaction([
       prisma.user.count({ where: { companyId } }),
@@ -295,6 +307,62 @@ export default async function AdminPage({ params }: AdminPageProps) {
           <p className="text-xs uppercase tracking-wide text-muted-foreground">{t("forRent")}</p>
           <p className="mt-1 text-2xl font-semibold">{forRentCount}</p>
         </article>
+      </section>
+
+      <section className="rounded-2xl border-2 border-orange-500 bg-orange-50/40 p-4 shadow-[0_4px_14px_rgba(255,149,0,0.08)]">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-base font-semibold text-orange-900">
+              {t("meetingsTitle")}
+            </h2>
+            <p className="mt-1 text-sm text-orange-800/80">{t("meetingsHint")}</p>
+          </div>
+          <span className="inline-flex min-w-[2rem] items-center justify-center rounded-full bg-orange-500 px-2 py-1 text-sm font-bold text-white">
+            {meetingListings.length}
+          </span>
+        </div>
+        {meetingListings.length === 0 ? (
+          <p className="mt-4 rounded-xl border border-dashed border-orange-300 bg-white/60 px-4 py-3 text-sm text-orange-800/80">
+            {t("noMeetings")}
+          </p>
+        ) : (
+          <div className="mt-4 overflow-x-auto rounded-xl border border-orange-200 bg-white/80">
+            <table className="min-w-full text-sm">
+              <thead className="bg-orange-100/60 text-left text-orange-900">
+                <tr>
+                  <th className="px-3 py-2">{t("listingId")}</th>
+                  <th className="px-3 py-2">{t("address")}</th>
+                  <th className="px-3 py-2">{t("agent")}</th>
+                  <th className="px-3 py-2">{t("reference")}</th>
+                  <th className="px-3 py-2">{t("updatedAt")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {meetingListings.map((listing) => (
+                  <tr key={listing.id} className="border-t border-orange-100">
+                    <td className="px-3 py-2">#{listing.id}</td>
+                    <td className="px-3 py-2">{listing.address ?? "-"}</td>
+                    <td className="px-3 py-2">
+                      {listing.createdBy?.name ?? listing.createdBy?.email ?? "-"}
+                    </td>
+                    <td className="px-3 py-2 text-xs">
+                      {listing.myhomeId ? `myhome:${listing.myhomeId}` : ""}
+                      {listing.myhomeId && listing.ssGeId ? " • " : ""}
+                      {listing.ssGeId ? `ss.ge:${listing.ssGeId}` : ""}
+                      {!listing.myhomeId && !listing.ssGeId ? "-" : ""}
+                    </td>
+                    <td className="px-3 py-2 text-xs text-muted-foreground">
+                      {new Intl.DateTimeFormat(locale, {
+                        dateStyle: "medium",
+                        timeStyle: "short",
+                      }).format(listing.updatedAt)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
 
       {isSuperAdmin ? (
